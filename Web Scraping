@@ -1,1 +1,52 @@
 
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+import time
+import pandas as pd
+import csv
+
+data = []
+
+driver = webdriver.Chrome()
+wait = WebDriverWait(driver,26)
+file1 = open("Links.txt", "r")
+
+for line in file1:
+    print(line.strip())
+    driver.get(line)
+    driver.set_window_size(1920,1080)
+    time.sleep(2)
+    acc = input("press enter after accepting cookies: ")
+    # accept = wait.until(EC.visibility_of_element_located((By.ID,'acceptAllButton')))
+    # if accept:
+    #     accept.click()
+    # else:
+    #     print("Button not found")
+    review_count =  wait.until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[3]/div/div[1]/div[1]/div[1]/div[3]/div[1]/div/div/div/div/div/div/dl/dd[2]'))).text 
+    print (review_count)
+    data.extend([review_count])
+    review_rating = wait.until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[3]/div/div[1]/div[1]/div[1]/div[3]/div[1]/div/div/div/div/div/div/dl/dd[1]/div/a'))).text 
+    print(review_rating)
+    data.extend([review_rating])
+    five_review = wait.until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[3]/div/div[1]/div[1]/div[1]/div[5]/div[4]/div/div/div/div/div[1]/div[3]/div/div/div[1]/div/div[2]/div[1]/div[3]/span'))).text 
+    print(five_review)
+    data.extend([five_review])
+    four_review = wait.until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[3]/div/div[1]/div[1]/div[1]/div[5]/div[4]/div/div/div/div/div[1]/div[3]/div/div/div[1]/div/div[2]/div[2]/div[3]/span'))).text
+    print(four_review)
+    data.extend([four_review])
+    three_review = wait.until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[3]/div/div[1]/div[1]/div[1]/div[5]/div[4]/div/div/div/div/div[1]/div[3]/div/div/div[1]/div/div[2]/div[3]/div[3]/span'))).text
+    print(three_review)  
+    data.extend([three_review])
+    two_review = wait.until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[3]/div/div[1]/div[1]/div[1]/div[5]/div[4]/div/div/div/div/div[1]/div[3]/div/div/div[1]/div/div[2]/div[4]/div[3]/span'))).text 
+    print(two_review)
+    data.extend([two_review])
+    one_review = wait.until(EC.visibility_of_element_located((By.XPATH,'/html/body/div[3]/div/div[1]/div[1]/div[1]/div[5]/div[4]/div/div/div/div/div[1]/div[3]/div/div/div[1]/div/div[2]/div[5]/div[3]/span'))).text 
+    print(one_review)
+    data.extend([one_review])
+    
+# info = pd.DataFrame([[data]], columns=['Scrape Data'])
+# info.to_csv('Result.csv')      
